@@ -34,8 +34,6 @@ module Shippinglogic
             "was in an unexpected format. You might try glancing at the raw response by using the 'response' method on this error object."
           )
         end
-        
-        super(errors.collect { |error| error[:message] }.join(", "))
       end
     end
   end

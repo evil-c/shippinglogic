@@ -2,6 +2,8 @@ require "shippinglogic/ups/service"
 require "shippinglogic/ups/cancel"
 require "shippinglogic/ups/rate"
 require "shippinglogic/ups/track"
+require "shippinglogic/ups/ship_accept"
+require "shippinglogic/ups/ship_confirm"
 
 module Shippinglogic
   class UPS

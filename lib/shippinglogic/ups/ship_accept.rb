@@ -19,10 +19,18 @@ module Shippinglogic
           self.rate     = BigDecimal.new(charges[:monetary_value])
           self.currency = charges[:currency_code]
           
-          self.shipments = [*details[:package_results]].collect do |package|
+          package_results = details[:package_results]
+          
+          packages = if package_results.is_a?(Array)
+            [*package_results]
+          else
+            [package_results]
+          end
+          
+          self.shipments = packages.collect do |package|
             shipment                  = Shipment.new
             shipment.tracking_number  = package[:tracking_number]
-            shipment.label            = Base64.decode64(package[:label_image][:graphic_image])
+            shipment.label            = package[:label_image][:graphic_image]
             shipment
           end
         end
