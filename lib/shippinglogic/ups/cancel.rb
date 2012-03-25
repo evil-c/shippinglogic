@@ -18,6 +18,7 @@ module Shippinglogic
       end
       
       attribute :tracking_number, :string
+      attribute :shipment, :hash
       
       # Our services are set up as a proxy. We need to access the underlying object, to trigger the request
       # to UPS. So calling this method is a way to do that since there really is no underlying object
@@ -42,9 +43,16 @@ module Shippinglogic
             b.Request do
               b.RequestAction "1"
             end
-            
-            #TODO Determine whether tracking numbers are valid shipment identification numbers.
-            b.ShipmentIdentificationNumber tracking_number
+
+            if shipment.blank?
+              #TODO Determine whether tracking numbers are valid shipment identification numbers.
+              b.ShipmentIdentificationNumber tracking_number
+            else
+              b.ExpandedVoidShipment do
+                b.ShipmentIdentificationNumber shipment[:number]
+                shipment[:tracking_numbers].each { |number| b.TrackingNumber number }
+              end
+            end
           end
         end
     end
