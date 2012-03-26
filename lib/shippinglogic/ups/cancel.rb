@@ -45,7 +45,6 @@ module Shippinglogic
             end
 
             if shipment.blank?
-              #TODO Determine whether tracking numbers are valid shipment identification numbers.
               b.ShipmentIdentificationNumber tracking_number
             else
               b.ExpandedVoidShipment do

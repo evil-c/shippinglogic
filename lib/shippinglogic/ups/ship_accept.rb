@@ -8,7 +8,7 @@ module Shippinglogic
       end
       
       class Details
-        class Shipment; attr_accessor :tracking_number, :label; end
+        class Shipment; attr_accessor :tracking_number, :label, :high_value_report; end
         
         attr_accessor :rate, :currency, :shipments
         
@@ -28,9 +28,10 @@ module Shippinglogic
           end
           
           self.shipments = packages.collect do |package|
-            shipment                  = Shipment.new
-            shipment.tracking_number  = package[:tracking_number]
-            shipment.label            = package[:label_image][:graphic_image]
+            shipment                   = Shipment.new
+            shipment.tracking_number   = package[:tracking_number]
+            shipment.label             = package[:label_image][:graphic_image]
+            shipment.high_value_report = response[:shipment_results][:control_log_receipt][:graphic_image]
             shipment
           end
         end
